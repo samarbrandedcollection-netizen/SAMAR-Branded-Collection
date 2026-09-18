@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAMAR Branded Collection · Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Poppins',sans-serif; background:#f4f6fa; color:#1a1a2e; }
+    
+    /* ===== SAMAR BRAND COLORS ===== */
+    :root { 
+      --samar-gold: #D4AF37; 
+      --samar-navy: #0A2E6D; 
+      --samar-cream: #F7F6F0; 
+      --samar-gold-gradient: linear-gradient(135deg, #D4AF37, #B8962E);
+      --samar-navy-gradient: linear-gradient(135deg, #0A2E6D, #0C3A7A);
+      --samar-shadow: 0 8px 30px rgba(212, 175, 55, 0.15);
+    }
+    
+    .samar-gold { color: var(--samar-gold); }
+    .samar-navy { color: var(--samar-navy); }
+    .samar-bg-gold { background: var(--samar-gold-gradient); }
+    .samar-bg-navy { background: var(--samar-navy-gradient); }
+    
+    /* ===== SAMAR BRAND LOGO ===== */
+    .samar-logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      background: var(--samar-gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 1px;
+    }
+    .samar-logo-sub {
+      font-size: 0.7rem;
+      color: var(--samar-gold);
+      letter-spacing: 3px;
+      font-weight: 300;
+      display: block;
+      margin-top: -4px;
+    }
+    
+    /* ===== SIDEBAR ===== */
+    .sidebar { 
+      background: #0A0E1A; 
+      min-height: 100vh; 
+      padding: 20px 0; 
+      position: sticky; 
+      top: 0; 
+      border-right: 2px solid rgba(212, 175, 55, 0.1);
+    }
+    .sidebar .brand { 
+      padding: 0 20px 25px; 
+      border-bottom: 1px solid rgba(255,255,255,0.06); 
+    }
+    .sidebar .nav-link { 
+      color: rgba(255,255,255,0.65); 
+      padding: 12px 24px; 
+      border-radius: 12px; 
+      margin: 4px 12px; 
+      cursor: pointer; 
+      transition: 0.3s; 
+      font-weight: 500; 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      position: relative;
+    }
+    .sidebar .nav-link:hover { 
+      background: rgba(212,175,55,0.12); 
+      color: #fff; 
+      transform: translateX(4px);
+    }
+    .sidebar .nav-link.active { 
+      background: var(--samar-gold-gradient); 
+      color: #0A0E1A; 
+      font-weight: 600; 
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+    .sidebar .nav-link i { font-size: 1.2rem; width: 24px; }
+    .sidebar .nav-link .badge-samar {
+      background: var(--samar-gold);
+      color: #0A0E1A;
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: auto;
+    }
+    
+    /* ===== MAIN CONTENT ===== */
+    .main-content { padding: 24px 30px 60px; }
+    
+    /* ===== CARDS ===== */
+    .card-samar { 
+      background: #fff; 
+      border-radius: 24px; 
+      border: 1px solid rgba(212, 175, 55, 0.08); 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+      padding: 24px; 
+      transition: 0.3s;
+    }
+    .card-samar:hover { box-shadow: var(--samar-shadow); }
+    
+    /* ===== BUTTONS ===== */
+    .btn-samar-gold { 
+      background: var(--samar-gold-gradient); 
+      border: none; 
+      color: #fff; 
+      font-weight: 600; 
+      padding: 10px 28px; 
+      border-radius: 40px; 
+      transition: 0.3s; 
+    }
+    .btn-samar-gold:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 25px rgba(212,175,55,0.35); 
+      color: #fff; 
+    }
+    .btn-samar-navy { 
+      background: var(--samar-navy-gradient); 
+      color: #fff; 
+      border: none; 
+      padding: 10px 28px; 
+      border-radius: 40px; 
+      transition: 0.3s; 
+    }
+    .btn-samar-navy:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 25px rgba(10,46,109,0.3); 
+      color: #fff; 
+    }
+    .btn-samar-danger { 
+      background: #dc3545; 
+      color: #fff; 
+      border: none; 
+      padding: 10px 28px; 
+      border-radius: 40px; 
+      transition: 0.3s; 
+    }
+    .btn-samar-danger:hover { 
+      background: #c82333; 
+      color: #fff; 
+      transform: translateY(-2px); 
+    }
+    .btn-samar-download { 
+      background: #6f42c1; 
+      color: #fff; 
+      border: none; 
+      padding: 10px 28px; 
+      border-radius: 40px; 
+      transition: 0.3s; 
+    }
+    .btn-samar-download:hover { 
+      background: #5a32a3; 
+      color: #fff; 
+      transform: translateY(-2px); 
+    }
+    
+    /* ===== BADGES ===== */
+    .badge-samar-gold { 
+      background: var(--samar-gold-gradient); 
+      color: #0A0E1A; 
+      font-weight: 500; 
+      padding: 6px 16px; 
+      border-radius: 40px; 
+    }
+    .badge-samar-navy { 
+      background: var(--samar-navy); 
+      color: #fff; 
+      padding: 6px 16px; 
+      border-radius: 40px; 
+    }
+    .badge-samar-verified {
+      background: #28a745;
+      color: #fff;
+      padding: 2px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+    
+    /* ===== STATS CARDS ===== */
+    .stat-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 24px 20px;
+      border: 1px solid rgba(212, 175, 55, 0.06);
+      transition: 0.3s;
+      text-align: center;
+    }
+    .stat-card:hover { 
+      transform: translateY(-4px); 
+      box-shadow: var(--samar-shadow);
+    }
+    .stat-card .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: var(--samar-gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-card .stat-label {
+      font-size: 0.85rem;
+      color: #888;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .stat-card .stat-icon {
+      font-size: 2rem;
+      color: var(--samar-gold);
+      opacity: 0.3;
+      margin-bottom: 8px;
+    }
+    
+    /* ===== EDIT FORMS ===== */
+    .edit-form { 
+      background: var(--samar-cream); 
+      border-radius: 16px; 
+      padding: 24px; 
+      border: 1px solid rgba(212, 175, 55, 0.1);
+    }
+    .edit-form label { 
+      font-weight: 600; 
+      font-size: 0.85rem; 
+      color: var(--samar-navy);
+    }
+    .edit-form .form-control { 
+      border-radius: 12px; 
+      border: 1px solid #ddd; 
+      padding: 10px 16px;
+      transition: 0.3s;
+    }
+    .edit-form .form-control:focus { 
+      border-color: var(--samar-gold); 
+      box-shadow: 0 0 0 0.2rem rgba(212,175,55,0.2); 
+    }
+    .edit-form .form-control::placeholder {
+      color: #bbb;
+      font-size: 0.85rem;
+    }
+    
+    /* ===== TABLES ===== */
+    .table-samar th { 
+      font-weight: 600; 
+      border-bottom: 2px solid var(--samar-gold);
+      color: var(--samar-navy);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .table-samar td { 
+      vertical-align: middle; 
+      border-bottom: 1px solid #f0ede8; 
+      padding: 12px 8px;
+    }
+    .table-samar tr:hover { background: rgba(212, 175, 55, 0.03); }
+    
+    /* ===== SECTIONS ===== */
+    .section-tab { display: none; }
+    .section-tab.active { display: block; animation: fadeSlide 0.3s ease; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* ===== UPLOAD AREA ===== */
+    .json-upload-area { 
+      border: 2px dashed var(--samar-gold); 
+      border-radius: 16px; 
+      padding: 40px; 
+      text-align: center; 
+      cursor: pointer; 
+      transition: 0.3s; 
+      background: rgba(212, 175, 55, 0.03);
+    }
+    .json-upload-area:hover { 
+      border-color: var(--samar-navy); 
+      background: rgba(212,175,55,0.08); 
+      transform: scale(1.01);
+    }
+    
+    /* ===== IMAGE PREVIEWS ===== */
+    .image-preview { 
+      max-width: 120px; 
+      max-height: 120px; 
+      border-radius: 16px; 
+      object-fit: cover; 
+      margin-top: 8px; 
+      border: 3px solid var(--samar-gold);
+      padding: 4px;
+    }
+    .img-thumb-preview { 
+      width: 60px; 
+      height: 60px; 
+      border-radius: 12px; 
+      object-fit: cover; 
+      border: 2px solid var(--samar-gold);
+      padding: 2px;
+    }
+    
+    /* ===== LOGIN ===== */
+    .login-box { 
+      max-width: 420px; 
+      margin: 80px auto; 
+      background: #fff; 
+      border-radius: 40px; 
+      padding: 48px 40px; 
+      box-shadow: 0 30px 80px rgba(0,0,0,0.06); 
+      border: 1px solid rgba(212, 175, 55, 0.08);
+    }
+    .login-box .samar-brand-lg { 
+      text-align: center; 
+    }
+    .login-box .samar-brand-lg .samar-logo {
+      font-size: 2.5rem;
+    }
+    .login-box .samar-brand-lg .samar-logo-sub {
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+    }
+    
+    /* ===== TOAST ===== */
+    .toast-message { 
+      position: fixed; 
+      top: 20px; 
+      right: 20px; 
+      z-index: 9999; 
+      animation: slideRight 0.4s ease;
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    /* ===== SAMAR VERIFIED BADGE ===== */
+    .samar-verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #28a745;
+      color: #fff;
+      padding: 2px 14px 2px 10px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+    .samar-verified-badge i {
+      font-size: 0.9rem;
+    }
+    
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) { 
+      .sidebar { min-height: auto; } 
+      .main-content { padding: 20px 16px; } 
+    }
+    @media (max-width: 576px) {
+      .stat-card .stat-number { font-size: 1.8rem; }
+      .login-box { padding: 30px 20px; margin: 40px 16px; }
+    }
+    
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f0ede8; }
+    ::-webkit-scrollbar-thumb { background: var(--samar-gold); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #b8962e; }
+    
+    /* ===== DEVELOPER CREDIT ===== */
+    .developer-credit { 
+      color: rgba(0,0,0,0.2); 
+      font-size: 0.8rem; 
+      letter-spacing: 0.5px;
+    }
+    .developer-credit strong { 
+      color: var(--samar-gold); 
+      font-weight: 600; 
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- LOGIN SCREEN -->
+<!-- ============================================================ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="samar-brand-lg mb-4">
+      <div class="samar-logo">✦ SAMAR ✦</div>
+      <span class="samar-logo-sub">BRANDED COLLECTION</span>
+    </div>
+    <p class="text-center text-secondary mb-4" style="font-size:0.9rem;">Admin Login · Premium Control</p>
+    <form onsubmit="handleLogin(event)">
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Username</label>
+        <input type="text" class="form-control" id="loginUsername" value="admin" required style="border-radius:12px;">
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Password</label>
+        <input type="password" class="form-control" id="loginPassword" value="admin123" required style="border-radius:12px;">
+      </div>
+      <button type="submit" class="btn btn-samar-gold w-100">Login to SAMAR</button>
+      <div id="loginError" class="text-danger text-center mt-2" style="display:none;">❌ Invalid username or password</div>
+    </form>
+    <div class="text-center mt-3">
+      <small class="text-secondary">Default: admin / admin1234</small>
+    </div>
+    <div class="text-center mt-2">
+      <span class="samar-verified-badge"><i class="bi bi-patch-check-fill"></i> SAMAR Secure</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ADMIN PANEL -->
+<!-- ============================================================ -->
+<div id="adminPanel" style="display:none;">
+<div class="container-fluid px-0">
+  <div class="row g-0">
+    
+    <!-- ===== SIDEBAR ===== -->
+    <div class="col-lg-2 col-md-3 sidebar d-none d-md-block">
+      <div class="brand">
+        <div class="samar-logo" style="font-size:1.5rem;">✦ SAMAR ✦</div>
+        <span class="samar-logo-sub" style="font-size:0.6rem;">ADMIN PANEL</span>
+      </div>
+      <nav class="nav flex-column mt-3">
+        <a class="nav-link active" onclick="showTab('dashboard')"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+        <a class="nav-link" onclick="showTab('categories')"><i class="bi bi-tags"></i> Categories</a>
+        <a class="nav-link" onclick="showTab('products')"><i class="bi bi-box-seam"></i> Products</a>
+        <a class="nav-link" onclick="showTab('reviews')"><i class="bi bi-star"></i> Reviews</a>
+        <a class="nav-link" onclick="showTab('faq')"><i class="bi bi-question-circle"></i> FAQ</a>
+        <a class="nav-link" onclick="showTab('contact')"><i class="bi bi-envelope"></i> Contact</a>
+        <a class="nav-link" onclick="showTab('social')"><i class="bi bi-share"></i> Social Links</a>
+        <a class="nav-link" onclick="showTab('hero')"><i class="bi bi-display"></i> Hero Section</a>
+        <a class="nav-link" onclick="showTab('brand')"><i class="bi bi-building"></i> Brand <span class="badge-samar">NEW</span></a>
+        <a class="nav-link" onclick="showTab('settings')"><i class="bi bi-gear"></i> Settings</a>
+        <hr class="text-secondary" style="opacity:0.1;">
+        <a class="nav-link text-danger" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a>
+      </nav>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="col-lg-10 col-md-9 main-content">
+      
+      <!-- Top Bar -->
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+          <h4 class="fw-bold" style="color:var(--samar-navy);">
+            <span class="samar-logo" style="font-size:1.8rem;">✦ SAMAR ✦</span>
+            <span style="font-weight:300;color:#888;font-size:1rem;">Admin Panel</span>
+          </h4>
+          <small class="text-secondary"><i class="bi bi-database samar-gold me-1"></i> JSON Powered · Real-time Sync</small>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <button class="btn btn-samar-download" onclick="downloadJSON()"><i class="bi bi-download me-2"></i>Download JSON</button>
+          <button class="btn btn-samar-gold" onclick="window.open('index.html','_blank')"><i class="bi bi-eye me-2"></i>View Website</button>
+          <button class="btn btn-outline-danger btn-sm" onclick="logout()"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Toast -->
+      <div class="toast-message" id="toastMessage" style="display:none;">
+        <div class="alert shadow-lg border-0 rounded-4" style="background:var(--samar-gold-gradient);color:#fff;padding:16px 24px;">
+          <i class="bi bi-check-circle me-2"></i> <span id="toastText">Saved!</span>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== DASHBOARD ===== -->
+      <!-- ============================================================ -->
+      <div id="dashboard" class="section-tab active">
+        <div class="row g-4 mb-4">
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
+              <div class="stat-number" id="dashProducts">0</div>
+              <div class="stat-label">Products</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="bi bi-tags"></i></div>
+              <div class="stat-number" id="dashCategories">0</div>
+              <div class="stat-label">Categories</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="bi bi-star"></i></div>
+              <div class="stat-number" id="dashReviews">0</div>
+              <div class="stat-label">Reviews</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="bi bi-question-circle"></i></div>
+              <div class="stat-number" id="dashFaq">0</div>
+              <div class="stat-label">FAQs</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Revenue Row -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-6">
+            <div class="stat-card" style="background:var(--samar-navy-gradient);border:none;">
+              <div class="stat-icon" style="color:#fff;opacity:0.5;"><i class="bi bi-currency-rupee"></i></div>
+              <div class="stat-number" style="-webkit-text-fill-color:#fff;font-size:2rem;" id="dashRevenue">Rs 0</div>
+              <div class="stat-label" style="color:rgba(255,255,255,0.7);">Total Revenue</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="stat-card" style="background:var(--samar-gold-gradient);border:none;">
+              <div class="stat-icon" style="color:#fff;opacity:0.5;"><i class="bi bi-trophy"></i></div>
+              <div class="stat-number" style="-webkit-text-fill-color:#fff;font-size:1.5rem;" id="dashTopProduct">—</div>
+              <div class="stat-label" style="color:rgba(255,255,255,0.7);">Top Selling Product</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-samar mb-4">
+          <h6 class="fw-bold"><i class="bi bi-upload samar-gold me-2"></i>Upload data.json</h6>
+          <div class="json-upload-area" onclick="document.getElementById('jsonUpload').click()">
+            <i class="bi bi-cloud-upload" style="font-size:2.5rem;color:var(--samar-gold);"></i>
+            <p class="mt-2 fw-medium">Click to select <strong>data.json</strong> file</p>
+            <small class="text-secondary">Drag & drop or click to upload</small>
+            <input type="file" id="jsonUpload" accept=".json" style="display:none;" onchange="uploadJSON(event)">
+          </div>
+        </div>
+
+        <div class="card-samar">
+          <h6 class="fw-bold"><i class="bi bi-info-circle samar-gold me-2"></i>How to Use SAMAR Admin</h6>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <div class="text-center p-3" style="background:var(--samar-cream);border-radius:16px;">
+                <i class="bi bi-pencil-square" style="font-size:1.8rem;color:var(--samar-gold);"></i>
+                <p class="mt-1 small fw-medium">1. Edit Content</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center p-3" style="background:var(--samar-cream);border-radius:16px;">
+                <i class="bi bi-download" style="font-size:1.8rem;color:var(--samar-gold);"></i>
+                <p class="mt-1 small fw-medium">2. Download JSON</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center p-3" style="background:var(--samar-cream);border-radius:16px;">
+                <i class="bi bi-upload" style="font-size:1.8rem;color:var(--samar-gold);"></i>
+                <p class="mt-1 small fw-medium">3. Upload to Server</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center p-3" style="background:var(--samar-cream);border-radius:16px;">
+                <i class="bi bi-eye" style="font-size:1.8rem;color:var(--samar-gold);"></i>
+                <p class="mt-1 small fw-medium">4. Website Updates</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== CATEGORIES ===== -->
+      <!-- ============================================================ -->
+      <div id="categories" class="section-tab">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+          <h4 class="fw-bold"><span class="samar-gold">Categories</span> <span style="font-size:0.8rem;font-weight:300;color:#888;">Manage your collections</span></h4>
+          <button class="btn btn-samar-gold" onclick="addCategory()"><i class="bi bi-plus-circle me-2"></i>Add Category</button>
+        </div>
+        <div class="card-samar"><div id="categoryList"></div></div>
+        <div class="card-samar mt-4" id="categoryEditForm" style="display:none;">
+          <h6 class="fw-bold"><i class="bi bi-pencil-square samar-gold me-2"></i>Edit Category</h6>
+          <div class="edit-form">
+            <input type="hidden" id="editCategoryId">
+            <div class="row g-3">
+              <div class="col-md-6"><label>Category Name</label><input type="text" class="form-control" id="editCategoryName" placeholder="e.g. Men, Women"></div>
+              <div class="col-md-6"><label>Icon (Bootstrap icon)</label><input type="text" class="form-control" id="editCategoryIcon" placeholder="person, bag, clock"></div>
+              <div class="col-md-6"><label>Slug</label><input type="text" class="form-control" id="editCategorySlug" placeholder="auto-generated"></div>
+              <div class="col-md-6"><label>Category Image</label><input type="file" class="form-control" accept="image/*" onchange="previewCategoryImage(event)"></div>
+              <div class="col-md-12"><img id="categoryImagePreview" class="image-preview" style="display:none;"></div>
+              <div class="col-12">
+                <button class="btn btn-samar-gold" onclick="saveCategory()"><i class="bi bi-check me-2"></i>Save</button>
+                <button class="btn btn-samar-danger" onclick="deleteCategory()"><i class="bi bi-trash me-2"></i>Delete</button>
+                <button class="btn btn-outline-secondary" onclick="cancelEditCategory()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== PRODUCTS ===== -->
+      <!-- ============================================================ -->
+      <div id="products" class="section-tab">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+          <h4 class="fw-bold"><span class="samar-gold">Products</span> <span style="font-size:0.8rem;font-weight:300;color:#888;">SAMAR Branded Collection</span></h4>
+          <button class="btn btn-samar-gold" onclick="addProduct()"><i class="bi bi-plus-circle me-2"></i>Add Product</button>
+        </div>
+        <div class="card-samar"><div id="productList"></div></div>
+        <div class="card-samar mt-4" id="productEditForm" style="display:none;">
+          <h6 class="fw-bold"><i class="bi bi-pencil-square samar-gold me-2"></i>Edit Product</h6>
+          <div class="edit-form">
+            <input type="hidden" id="editProductId">
+            <div class="row g-3">
+              <div class="col-md-6"><label>Product Name</label><input type="text" class="form-control" id="editProductName" placeholder="e.g. Premium Shirt"></div>
+              <div class="col-md-6"><label>Category</label>
+                <select class="form-control" id="editProductCategory"></select>
+              </div>
+              <div class="col-md-4"><label>Icon</label><input type="text" class="form-control" id="editProductIcon" placeholder="box-seam"></div>
+              <div class="col-md-4"><label>Price (Rs)</label><input type="number" class="form-control" id="editProductPrice" placeholder="3499"></div>
+              <div class="col-md-4"><label>Sale Price (Rs)</label><input type="number" class="form-control" id="editProductSalePrice" placeholder="4999"></div>
+              <div class="col-md-12"><label>Description</label><textarea class="form-control" id="editProductDesc" rows="2" placeholder="Product description..."></textarea></div>
+              <div class="col-md-4"><label>Stock</label><input type="number" class="form-control" id="editProductStock" placeholder="0"></div>
+              <div class="col-md-4"><label>Status</label>
+                <select class="form-control" id="editProductStatus">
+                  <option value="Active">Active</option>
+                  <option value="Featured">⭐ Featured</option>
+                  <option value="Draft">Draft</option>
+                </select>
+              </div>
+              <div class="col-md-4"><label>Product Image</label><input type="file" class="form-control" accept="image/*" onchange="previewProductImage(event)"></div>
+              <div class="col-md-12"><img id="productImagePreview" class="image-preview" style="display:none;"></div>
+              <div class="col-12">
+                <button class="btn btn-samar-gold" onclick="saveProduct()"><i class="bi bi-check me-2"></i>Save</button>
+                <button class="btn btn-samar-danger" onclick="deleteProduct()"><i class="bi bi-trash me-2"></i>Delete</button>
+                <button class="btn btn-outline-secondary" onclick="cancelEditProduct()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== REVIEWS ===== -->
+      <!-- ============================================================ -->
+      <div id="reviews" class="section-tab">
+        <h4 class="fw-bold mb-4"><span class="samar-gold">Reviews</span> <span style="font-size:0.8rem;font-weight:300;color:#888;">Customer feedback</span></h4>
+        <div class="card-samar"><div id="reviewList"></div></div>
+        <div class="card-samar mt-4" id="reviewEditForm" style="display:none;">
+          <h6 class="fw-bold"><i class="bi bi-pencil-square samar-gold me-2"></i>Edit Review</h6>
+          <div class="edit-form">
+            <input type="hidden" id="editReviewId">
+            <div class="row g-3">
+              <div class="col-md-6"><label>Customer Name</label><input type="text" class="form-control" id="editReviewName" placeholder="e.g. Ahmed K."></div>
+              <div class="col-md-6"><label>Rating (1-5)</label><input type="number" class="form-control" id="editReviewRating" min="1" max="5" placeholder="5"></div>
+              <div class="col-md-12"><label>Review Text</label><textarea class="form-control" id="editReviewText" rows="2" placeholder="Customer review..."></textarea></div>
+              <div class="col-md-6"><label>Date</label><input type="text" class="form-control" id="editReviewDate" placeholder="2 days ago"></div>
+              <div class="col-md-6"><label>Approved</label>
+                <select class="form-control" id="editReviewApproved">
+                  <option value="true">✅ Yes</option>
+                  <option value="false">❌ No</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-samar-gold" onclick="saveReview()"><i class="bi bi-check me-2"></i>Save</button>
+                <button class="btn btn-samar-danger" onclick="deleteReview()"><i class="bi bi-trash me-2"></i>Delete</button>
+                <button class="btn btn-outline-secondary" onclick="cancelEditReview()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== FAQ ===== -->
+      <!-- ============================================================ -->
+      <div id="faq" class="section-tab">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+          <h4 class="fw-bold"><span class="samar-gold">FAQ</span> <span style="font-size:0.8rem;font-weight:300;color:#888;">Frequently asked questions</span></h4>
+          <button class="btn btn-samar-gold" onclick="addFaq()"><i class="bi bi-plus-circle me-2"></i>Add FAQ</button>
+        </div>
+        <div class="card-samar"><div id="faqList"></div></div>
+        <div class="card-samar mt-4" id="faqEditForm" style="display:none;">
+          <h6 class="fw-bold"><i class="bi bi-pencil-square samar-gold me-2"></i>Edit FAQ</h6>
+          <div class="edit-form">
+            <input type="hidden" id="editFaqId">
+            <div class="row g-3">
+              <div class="col-md-12"><label>Question</label><input type="text" class="form-control" id="editFaqQuestion" placeholder="e.g. What is the delivery time?"></div>
+              <div class="col-md-12"><label>Answer</label><textarea class="form-control" id="editFaqAnswer" rows="2" placeholder="Answer..."></textarea></div>
+              <div class="col-md-6"><label>Icon</label><input type="text" class="form-control" id="editFaqIcon" placeholder="truck"></div>
+              <div class="col-md-6"><label>Order</label><input type="number" class="form-control" id="editFaqOrder" placeholder="1"></div>
+              <div class="col-12">
+                <button class="btn btn-samar-gold" onclick="saveFaq()"><i class="bi bi-check me-2"></i>Save</button>
+                <button class="btn btn-samar-danger" onclick="deleteFaq()"><i class="bi bi-trash me-2"></i>Delete</button>
+                <button class="btn btn-outline-secondary" onclick="cancelEditFaq()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== CONTACT ===== -->
+      <!-- ============================================================ -->
+      <div id="contact" class="section-tab">
+        <h4 class="fw-bold mb-4"><span class="samar-gold">Contact</span> Information</h4>
+        <div class="card-samar">
+          <div class="edit-form">
+            <div class="row g-3">
+              <div class="col-md-6"><label>WhatsApp</label><input type="text" class="form-control" id="contactWhatsapp" placeholder="+92 300 1234567"></div>
+              <div class="col-md-6"><label>Phone</label><input type="text" class="form-control" id="contactPhone" placeholder="+92 300 7654321"></div>
+              <div class="col-md-6"><label>Email</label><input type="email" class="form-control" id="contactEmail" placeholder="info@samarcollection.com"></div>
+              <div class="col-md-6"><label>Business Hours</label><input type="text" class="form-control" id="contactHours" placeholder="Mon-Sat: 10:00 AM – 8:00 PM"></div>
+              <div class="col-md-12"><label>Address</label><textarea class="form-control" id="contactAddress" rows="2" placeholder="123 Luxury Blvd, Dubai"></textarea></div>
+              <div class="col-12"><button class="btn btn-samar-gold" onclick="saveContact()"><i class="bi bi-check me-2"></i>Save Contact</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== SOCIAL LINKS ===== -->
+      <!-- ============================================================ -->
+      <div id="social" class="section-tab">
+        <h4 class="fw-bold mb-4"><span class="samar-gold">Social</span> Media Links</h4>
+        <div class="card-samar">
+          <div class="edit-form">
+            <div class="row g-3">
+              <div class="col-md-12"><label><i class="bi bi-instagram samar-gold me-2"></i>Instagram URL</label><input type="text" class="form-control" id="socialInstagram" placeholder="https://instagram.com/samar_collection"></div>
+              <div class="col-md-12"><label><i class="bi bi-facebook samar-gold me-2"></i>Facebook URL</label><input type="text" class="form-control" id="socialFacebook" placeholder="https://facebook.com/samarcollection"></div>
+              <div class="col-md-12"><label><i class="bi bi-youtube samar-gold me-2"></i>YouTube URL</label><input type="text" class="form-control" id="socialYoutube" placeholder="https://youtube.com/samarcollection"></div>
+              <div class="col-md-12"><label><i class="bi bi-tiktok samar-gold me-2"></i>TikTok URL</label><input type="text" class="form-control" id="socialTiktok" placeholder="https://tiktok.com/@samar_official"></div>
+              <div class="col-12"><button class="btn btn-samar-gold" onclick="saveSocial()"><i class="bi bi-check me-2"></i>Save Social Links</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== HERO SECTION ===== -->
+      <!-- ============================================================ -->
+      <div id="hero" class="section-tab">
+        <h4 class="fw-bold mb-4"><span class="samar-gold">Hero</span> Section</h4>
+        <div class="card-samar">
+          <div class="edit-form">
+            <div class="row g-3">
+              <div class="col-md-12"><label>Badge Text</label><input type="text" class="form-control" id="heroBadge" placeholder="Premium Collection"></div>
+              <div class="col-md-12"><label>Title</label><textarea class="form-control" id="heroTitle" rows="2" placeholder="Premium Fashion <br><span class="samar-gold">Starts Here</span>"></textarea></div>
+              <div class="col-md-12"><label>Subtitle</label><textarea class="form-control" id="heroSub" rows="2" placeholder="High Quality Fashion for Every Style."></textarea></div>
+              <div class="col-md-12"><label>Hero Image</label><input type="file" class="form-control" accept="image/*" onchange="previewHeroImage(event)"></div>
+              <div class="col-md-12"><img id="heroImagePreview" class="image-preview" style="display:none;"></div>
+              <div class="col-12"><button class="btn btn-samar-gold" onclick="saveHero()"><i class="bi bi-check me-2"></i>Save Hero</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== BRAND SETTINGS (NEW) ===== -->
+      <!-- ============================================================ -->
+      <div id="brand" class="section-tab">
+        <h4 class="fw-bold mb-4"><span class="samar-gold">Brand</span> Settings <span class="badge-samar-gold" style="font-size:0.7rem;padding:2px 12px;">NEW</span></h4>
+        <div class="card-samar">
+          <div class="edit-form">
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label><i class="bi bi-building samar-gold me-2"></i>Brand Name</label>
+                <input type="text" class="form-control" id="brandName" placeholder="SAMAR Branded Collection">
+              </div>
+              <div class="col-md-12">
+                <label><i class="bi bi-tag samar-gold me-2"></i>Tagline</label>
+                <input type="text" class="form-control" id="brandTagline" placeholder="Premium Fashion Since 2019">
+              </div>
+              <div class="col-md-6">
+                <label><i class="bi bi-palette samar-gold me-2"></i>Primary Color</label>
+                <input type="color" class="form-control" id="brandPrimaryColor" value="#0A2E6D" style="height:50px;padding:4px;">
+              </div>
+              <div class="col-md-6">
+                <label><i class="bi bi-palette samar-gold me-2"></i>Secondary Color</label>
+                <input type="color" class="form-control" id="brandSecondaryColor" value="#D4AF37" style="height:50px;padding:4px;">
+              </div>
+              <div class="col-md-12">
+                <label><i class="bi bi-image samar-gold me-2"></i>Brand Logo</label>
+                <input type="file" class="form-control" accept="image/*" onchange="previewBrandLogo(event)">
+                <img id="brandLogoPreview" class="image-preview" style="display:none;max-width:150px;max-height:150px;">
+              </div>
+              <div class="col-md-12">
+                <label><i class="bi bi-flag samar-gold me-2"></i>Brand Description</label>
+                <textarea class="form-control" id="brandDesc" rows="2" placeholder="Premium fashion for men, women, and kids. Redefining elegance with every piece."></textarea>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-samar-gold" onclick="saveBrand()"><i class="bi bi-check me-2"></i>Save Brand Settings</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-samar mt-4">
+          <h6 class="fw-bold"><i class="bi bi-palette samar-gold me-2"></i>Brand Preview</h6>
+          <div class="p-4 text-center" style="border-radius:16px;background:var(--samar-cream);">
+            <div style="display:inline-block;padding:20px 40px;border-radius:20px;border:2px solid var(--samar-gold);">
+              <div style="font-size:2.5rem;font-weight:700;color:var(--samar-navy);" id="brandPreviewName">✦ SAMAR ✦</div>
+              <div style="font-size:0.8rem;color:var(--samar-gold);letter-spacing:3px;" id="brandPreviewTagline">BRANDED COLLECTION</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- ===== SETTINGS ===== -->
+      <!-- ============================================================ -->
+      <div id="settings" class="section-tab">
+        <h4 class="fw-bold mb-4"><span class="samar-gold">Settings</span></h4>
+        <div class="card-samar">
+          <div class="edit-form">
+            <div class="row g-3">
+              <div class="col-md-12"><label><i class="bi bi-copy samar-gold me-2"></i>Footer Text</label><input type="text" class="form-control" id="footerText" placeholder="© 2026 SAMAR Branded Collection. All rights reserved."></div>
+              <div class="col-md-12"><label><i class="bi bi-align-left samar-gold me-2"></i>Footer Description</label><textarea class="form-control" id="footerDesc" rows="2" placeholder="Premium fashion for men, women, and kids."></textarea></div>
+              <div class="col-12">
+                <button class="btn btn-samar-gold" onclick="saveSettings()"><i class="bi bi-check me-2"></i>Save Settings</button>
+              </div>
+              <div class="col-12"><hr></div>
+              <div class="col-12">
+                <button class="btn btn-samar-danger" onclick="resetData()"><i class="bi bi-arrow-counterclockwise me-2"></i>Reset All Data</button>
+                <button class="btn btn-outline-secondary" onclick="exportCSV()"><i class="bi bi-file-earmark-excel me-2"></i>Export CSV</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FOOTER ===== -->
+      <div class="mt-5 pt-3 text-center border-top">
+        <p class="text-secondary small mb-1"><span class="samar-gold">✦</span> SAMAR Admin · JSON Powered <span class="samar-gold">✦</span></p>
+        <p class="developer-credit">Developed by <strong>Ubaid Graphics 03278992381</strong> · Premium Design & Development</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+  // ============================================================
+  // LOGIN SYSTEM
+  // ============================================================
+  const VALID_USERNAME = 'admin';
+  const VALID_PASSWORD = 'admin123';
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+    if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+      sessionStorage.setItem('samarLoggedIn', 'true');
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      document.getElementById('loginError').style.display = 'none';
+      loadData();
+      renderAll();
+      showToast('Welcome to SAMAR Admin! ✦');
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  }
+
+  function logout() {
+    if (confirm('Logout from SAMAR Admin?')) {
+      sessionStorage.removeItem('samarLoggedIn');
+      document.getElementById('loginScreen').style.display = 'block';
+      document.getElementById('adminPanel').style.display = 'none';
+      document.getElementById('loginError').style.display = 'none';
+    }
+  }
+
+  // ============================================================
+  // DATA MANAGEMENT
+  // ============================================================
+  let appData = null;
+  let tempImages = {};
+
+  function getDefaultData() {
+    return {
+      brand: {
+        name: 'SAMAR Branded Collection',
+        tagline: 'Premium Fashion Since 2019',
+        logo: '',
+        primaryColor: '#0A2E6D',
+        secondaryColor: '#D4AF37',
+        description: 'Premium fashion for men, women, and kids. Redefining elegance with every piece.'
+      },
+      categories: [
+        { id:1, name:'Men', icon:'person', slug:'men', image:'' },
+        { id:2, name:'Women', icon:'person-female', slug:'women', image:'' },
+        { id:3, name:'Kids', icon:'person-wheelchair', slug:'kids', image:'' },
+        { id:4, name:'Shoes', icon:'shoe-print', slug:'shoes', image:'' },
+        { id:5, name:'Bags', icon:'bag', slug:'bags', image:'' },
+        { id:6, name:'Watches', icon:'clock', slug:'watches', image:'' }
+      ],
+      products: [
+        { id:1, name:'Premium Shirt', category:'Men', price:'3,499', salePrice:'4,999', icon:'box-seam', desc:'Premium quality shirt for formal occasions. Made with 100% cotton.', stock:45, status:'Featured', image:'' },
+        { id:2, name:'Leather Bag', category:'Women', price:'5,999', salePrice:'7,999', icon:'handbag', desc:'Genuine leather handbag with premium finish.', stock:23, status:'Active', image:'' },
+        { id:3, name:'Gold Chrono', category:'Watches', price:'12,499', salePrice:'15,999', icon:'watch', desc:'Luxury gold chronograph watch.', stock:12, status:'Active', image:'' },
+        { id:4, name:'Aviator Sunglass', category:'Accessories', price:'2,499', salePrice:'3,499', icon:'sunglasses', desc:'Classic aviator sunglasses.', stock:78, status:'Draft', image:'' }
+      ],
+      reviews: [
+        { id:1, name:'Ahmed K.', rating:5, text:'Incredible quality! SAMAR delivers luxury at honest prices.', date:'2 days ago', approved:true },
+        { id:2, name:'Sara M.', rating:5, text:'Fast delivery and premium packaging. The watch is stunning.', date:'3 days ago', approved:true },
+        { id:3, name:'Usman R.', rating:4, text:'Great collection for kids. Will order again.', date:'5 days ago', approved:true }
+      ],
+      faq: [
+        { id:1, question:'What is the delivery time?', answer:'2-4 business days nationwide. Cash on delivery available.', icon:'truck', order:1 },
+        { id:2, question:'Are products original?', answer:'100% original branded products with authenticity guarantee.', icon:'shield-check', order:2 },
+        { id:3, question:'How to place an order?', answer:'Click WhatsApp order button or contact us directly.', icon:'whatsapp', order:3 },
+        { id:4, question:'What is the return policy?', answer:'7-day easy return policy. Exchange or refund.', icon:'arrow-return-left', order:4 },
+        { id:5, question:'Do you offer online payment?', answer:'Yes, credit card, bank transfer, and Cash on Delivery.', icon:'credit-card', order:5 }
+      ],
+      contact: {
+        whatsapp:'+92 300 1234567',
+        phone:'+92 300 7654321',
+        email:'info@samarcollection.com',
+        hours:'Mon-Sat: 10:00 AM – 8:00 PM',
+        address:'123 Luxury Blvd, Dubai, United Arab Emirates'
+      },
+      social: {
+        instagram:'https://instagram.com/samar_collection',
+        facebook:'https://facebook.com/samarcollection',
+        youtube:'https://youtube.com/samarcollection',
+        tiktok:'https://tiktok.com/@samar_official'
+      },
+      hero: {
+        badge:'Premium Collection',
+        title:'Premium Fashion <br><span class="samar-gold">Starts Here</span>',
+        subtitle:'High Quality Fashion for Every Style. Men, Women, Kids – curated elegance.',
+        image:''
+      },
+      footer: '© 2026 SAMAR Branded Collection. All rights reserved.',
+      footerDesc: 'Premium fashion for men, women, and kids. Redefining elegance with every piece.'
+    };
+  }
+
+  function loadData() {
+    let data = localStorage.getItem('samarData');
+    if (data) {
+      try {
+        appData = JSON.parse(data);
+        const defaults = getDefaultData();
+        for (let key in defaults) {
+          if (!appData[key]) appData[key] = defaults[key];
+        }
+        // Ensure brand exists
+        if (!appData.brand) appData.brand = defaults.brand;
+        return;
+      } catch(e) {}
+    }
+    appData = getDefaultData();
+    localStorage.setItem('samarData', JSON.stringify(appData));
+  }
+
+  function saveToStorage() {
+    localStorage.setItem('samarData', JSON.stringify(appData));
+    // Notify other tabs
+    window.dispatchEvent(new StorageEvent('storage', { 
+      key: 'samarData', 
+      newValue: JSON.stringify(appData) 
+    }));
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toastMessage');
+    document.getElementById('toastText').textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 3000);
+  }
+
+  // ============================================================
+  // IMAGE HANDLING
+  // ============================================================
+  function fileToBase64(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = function(e) { resolve(e.target.result); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function previewCategoryImage(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('categoryImagePreview').src = e.target.result;
+        document.getElementById('categoryImagePreview').style.display = 'block';
+        tempImages.category = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function previewProductImage(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('productImagePreview').src = e.target.result;
+        document.getElementById('productImagePreview').style.display = 'block';
+        tempImages.product = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function previewHeroImage(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('heroImagePreview').src = e.target.result;
+        document.getElementById('heroImagePreview').style.display = 'block';
+        tempImages.hero = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function previewBrandLogo(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('brandLogoPreview').src = e.target.result;
+        document.getElementById('brandLogoPreview').style.display = 'block';
+        tempImages.brandLogo = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // ============================================================
+  // DOWNLOAD JSON
+  // ============================================================
+  function downloadJSON() {
+    saveCurrentData();
+    const jsonStr = JSON.stringify(appData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('📥 data.json downloaded successfully!');
+  }
+
+  // ============================================================
+  // UPLOAD JSON
+  // ============================================================
+  function uploadJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (data.categories && data.products) {
+          appData = data;
+          saveToStorage();
+          renderAll();
+          showToast('✅ data.json uploaded successfully!');
+          window.dispatchEvent(new StorageEvent('storage', { key: 'samarData', newValue: JSON.stringify(appData) }));
+        } else {
+          showToast('❌ Invalid data.json format');
+        }
+      } catch(err) {
+        showToast('❌ Error parsing JSON file');
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  // ============================================================
+  // SAVE CURRENT DATA
+  // ============================================================
+  function saveCurrentData() {
+    if (!appData) return;
+    
+    // Contact
+    if (appData.contact) {
+      appData.contact.whatsapp = document.getElementById('contactWhatsapp').value.trim();
+      appData.contact.phone = document.getElementById('contactPhone').value.trim();
+      appData.contact.email = document.getElementById('contactEmail').value.trim();
+      appData.contact.hours = document.getElementById('contactHours').value.trim();
+      appData.contact.address = document.getElementById('contactAddress').value.trim();
+    }
+    
+    // Social
+    if (appData.social) {
+      appData.social.instagram = document.getElementById('socialInstagram').value.trim();
+      appData.social.facebook = document.getElementById('socialFacebook').value.trim();
+      appData.social.youtube = document.getElementById('socialYoutube').value.trim();
+      appData.social.tiktok = document.getElementById('socialTiktok').value.trim();
+    }
+    
+    // Hero
+    if (appData.hero) {
+      appData.hero.badge = document.getElementById('heroBadge').value.trim();
+      appData.hero.title = document.getElementById('heroTitle').value.trim();
+      appData.hero.subtitle = document.getElementById('heroSub').value.trim();
+      if (tempImages.hero) appData.hero.image = tempImages.hero;
+    }
+    
+    // Brand
+    if (appData.brand) {
+      appData.brand.name = document.getElementById('brandName').value.trim();
+      appData.brand.tagline = document.getElementById('brandTagline').value.trim();
+      appData.brand.primaryColor = document.getElementById('brandPrimaryColor').value;
+      appData.brand.secondaryColor = document.getElementById('brandSecondaryColor').value;
+      appData.brand.description = document.getElementById('brandDesc').value.trim();
+      if (tempImages.brandLogo) appData.brand.logo = tempImages.brandLogo;
+    }
+    
+    // Footer
+    appData.footer = document.getElementById('footerText').value.trim();
+    appData.footerDesc = document.getElementById('footerDesc').value.trim();
+    
+    saveToStorage();
+  }
+
+  // ============================================================
+  // TAB SWITCHING
+  // ============================================================
+  function showTab(tabId) {
+    document.querySelectorAll('.section-tab').forEach(tab => tab.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => link.classList.remove('active'));
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+      if (link.textContent.trim().toLowerCase().includes(tabId)) {
+        link.classList.add('active');
+      }
+    });
+    renderAll();
+  }
+
+  // ============================================================
+  // RENDER ALL
+  // ============================================================
+  function renderAll() {
+    if (!appData) return;
+    
+    // Dashboard Stats
+    document.getElementById('dashProducts').textContent = appData.products.length;
+    document.getElementById('dashCategories').textContent = appData.categories.length;
+    document.getElementById('dashReviews').textContent = appData.reviews.length;
+    document.getElementById('dashFaq').textContent = appData.faq.length;
+    
+    // Total Revenue
+    const totalRevenue = appData.products.reduce((sum, p) => {
+      const price = parseFloat(p.price.replace(/,/g, '')) || 0;
+      return sum + price;
+    }, 0);
+    document.getElementById('dashRevenue').textContent = 'Rs ' + totalRevenue.toLocaleString('en-PK');
+    
+    // Top Product
+    if (appData.products.length > 0) {
+      const topProduct = appData.products.reduce((a, b) => {
+        const priceA = parseFloat(a.price.replace(/,/g, '')) || 0;
+        const priceB = parseFloat(b.price.replace(/,/g, '')) || 0;
+        return priceA > priceB ? a : b;
+      });
+      document.getElementById('dashTopProduct').textContent = topProduct.name;
+    } else {
+      document.getElementById('dashTopProduct').textContent = '—';
+    }
+
+    // ===== CATEGORIES =====
+    const catList = document.getElementById('categoryList');
+    catList.innerHTML = `<table class="table table-samar">
+      <thead><tr><th>#</th><th>Image</th><th>Name</th><th>Icon</th><th>Slug</th><th>Actions</th></tr></thead>
+      <tbody>${appData.categories.map(c => `
+        <tr><td>${c.id}</td>
+        <td>${c.image ? `<img src="${c.image}" class="img-thumb-preview">` : '-'}</td>
+        <td><i class="bi bi-${c.icon || 'tag'} samar-gold me-2"></i>${c.name}</td>
+        <td>${c.icon || 'tag'}</td>
+        <td><code>${c.slug || '-'}</code></td>
+        <td><button class="btn btn-sm btn-samar-gold" onclick="editCategory(${c.id})" style="padding:4px 16px;font-size:0.8rem;"><i class="bi bi-pencil"></i></button></td></tr>
+      `).join('')}</tbody>
+    </table>`;
+
+    // ===== PRODUCTS =====
+    const prodList = document.getElementById('productList');
+    prodList.innerHTML = `<table class="table table-samar">
+      <thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Status</th><th>Stock</th><th>Actions</th></tr></thead>
+      <tbody>${appData.products.map(p => `
+        <tr>
+          <td>${p.image ? `<img src="${p.image}" class="img-thumb-preview">` : `<i class="bi bi-${p.icon || 'box'} samar-gold" style="font-size:1.5rem;"></i>`}</td>
+          <td><strong>${p.name}</strong></td>
+          <td>${p.category}</td>
+          <td><span class="fw-bold">Rs ${p.price}</span> <small class="text-secondary text-decoration-line-through">Rs ${p.salePrice}</small></td>
+          <td><span class="${p.status === 'Featured' ? 'badge-samar-gold' : p.status === 'Active' ? 'badge-samar-navy' : 'badge bg-secondary'}">${p.status}</span></td>
+          <td>${p.stock || 0}</td>
+          <td><button class="btn btn-sm btn-samar-gold" onclick="editProduct(${p.id})" style="padding:4px 16px;font-size:0.8rem;"><i class="bi bi-pencil"></i></button></td>
+        </tr>
+      `).join('')}</tbody>
+    </table>`;
+
+    // Populate category dropdown in product form
+    const catDropdown = document.getElementById('editProductCategory');
+    catDropdown.innerHTML = appData.categories.map(c => 
+      `<option value="${c.name}">${c.name}</option>`
+    ).join('');
+
+    // ===== REVIEWS =====
+    const revList = document.getElementById('reviewList');
+    revList.innerHTML = appData.reviews.map(r => `
+      <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+        <div>
+          <strong>${r.name}</strong> 
+          <span class="samar-gold">${'★'.repeat(r.rating)}</span>
+          <span class="text-secondary small">${r.date}</span>
+          ${r.approved ? '<span class="badge-samar-verified ms-2"><i class="bi bi-check-circle"></i> Verified</span>' : ''}
+          <br><small class="text-secondary">${r.text.substring(0,60)}${r.text.length > 60 ? '...' : ''}</small>
+        </div>
+        <div><button class="btn btn-sm btn-samar-gold" onclick="editReview(${r.id})" style="padding:4px 16px;font-size:0.8rem;"><i class="bi bi-pencil"></i></button></div>
+      </div>
+    `).join('');
+
+    // ===== FAQ =====
+    const faqList = document.getElementById('faqList');
+    faqList.innerHTML = appData.faq.sort((a,b) => a.order - b.order).map(f => `
+      <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+        <div><i class="bi bi-${f.icon || 'question-circle'} samar-gold me-2"></i><strong>${f.question}</strong> <span class="text-secondary small">(Order: ${f.order})</span></div>
+        <div><button class="btn btn-sm btn-samar-gold" onclick="editFaq(${f.id})" style="padding:4px 16px;font-size:0.8rem;"><i class="bi bi-pencil"></i></button></div>
+      </div>
+    `).join('');
+
+    // ===== CONTACT =====
+    document.getElementById('contactWhatsapp').value = appData.contact.whatsapp || '';
+    document.getElementById('contactPhone').value = appData.contact.phone || '';
+    document.getElementById('contactEmail').value = appData.contact.email || '';
+    document.getElementById('contactHours').value = appData.contact.hours || '';
+    document.getElementById('contactAddress').value = appData.contact.address || '';
+
+    // ===== SOCIAL =====
+    document.getElementById('socialInstagram').value = appData.social.instagram || '';
+    document.getElementById('socialFacebook').value = appData.social.facebook || '';
+    document.getElementById('socialYoutube').value = appData.social.youtube || '';
+    document.getElementById('socialTiktok').value = appData.social.tiktok || '';
+
+    // ===== HERO =====
+    document.getElementById('heroBadge').value = appData.hero.badge || '';
+    document.getElementById('heroTitle').value = appData.hero.title || '';
+    document.getElementById('heroSub').value = appData.hero.subtitle || '';
+    if (appData.hero.image) {
+      document.getElementById('heroImagePreview').src = appData.hero.image;
+      document.getElementById('heroImagePreview').style.display = 'block';
+    }
+
+    // ===== BRAND =====
+    if (appData.brand) {
+      document.getElementById('brandName').value = appData.brand.name || 'SAMAR Branded Collection';
+      document.getElementById('brandTagline').value = appData.brand.tagline || 'Premium Fashion Since 2024';
+      document.getElementById('brandPrimaryColor').value = appData.brand.primaryColor || '#0A2E6D';
+      document.getElementById('brandSecondaryColor').value = appData.brand.secondaryColor || '#D4AF37';
+      document.getElementById('brandDesc').value = appData.brand.description || '';
+      if (appData.brand.logo) {
+        document.getElementById('brandLogoPreview').src = appData.brand.logo;
+        document.getElementById('brandLogoPreview').style.display = 'block';
+      }
+      // Update preview
+      document.getElementById('brandPreviewName').textContent = appData.brand.name || '✦ SAMAR ✦';
+      document.getElementById('brandPreviewTagline').textContent = appData.brand.tagline || 'BRANDED COLLECTION';
+      document.getElementById('brandPreviewName').style.color = appData.brand.primaryColor || '#0A2E6D';
+      document.getElementById('brandPreviewTagline').style.color = appData.brand.secondaryColor || '#D4AF37';
+    }
+
+    // ===== SETTINGS =====
+    document.getElementById('footerText').value = appData.footer || '';
+    document.getElementById('footerDesc').value = appData.footerDesc || '';
+
+    // Apply brand colors to CSS variables
+    if (appData.brand) {
+      document.documentElement.style.setProperty('--samar-navy', appData.brand.primaryColor || '#0A2E6D');
+      document.documentElement.style.setProperty('--samar-gold', appData.brand.secondaryColor || '#D4AF37');
+      document.documentElement.style.setProperty('--samar-gold-gradient', 
+        `linear-gradient(135deg, ${appData.brand.secondaryColor || '#D4AF37'}, ${adjustColor(appData.brand.secondaryColor || '#D4AF37', -30)})`
+      );
+    }
+  }
+
+  // Helper: adjust color brightness
+  function adjustColor(hex, percent) {
+    let r = parseInt(hex.slice(1,3), 16);
+    let g = parseInt(hex.slice(3,5), 16);
+    let b = parseInt(hex.slice(5,7), 16);
+    r = Math.max(0, Math.min(255, r + percent));
+    g = Math.max(0, Math.min(255, g + percent));
+    b = Math.max(0, Math.min(255, b + percent));
+    return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+  }
+
+  // ============================================================
+  // CATEGORY CRUD
+  // ============================================================
+  let editingCategoryId = null;
+
+  function editCategory(id) {
+    const cat = appData.categories.find(c => c.id === id);
+    if (!cat) return;
+    editingCategoryId = id;
+    document.getElementById('editCategoryId').value = id;
+    document.getElementById('editCategoryName').value = cat.name;
+    document.getElementById('editCategoryIcon').value = cat.icon || '';
+    document.getElementById('editCategorySlug').value = cat.slug || '';
+    if (cat.image) {
+      document.getElementById('categoryImagePreview').src = cat.image;
+      document.getElementById('categoryImagePreview').style.display = 'block';
+      tempImages.category = cat.image;
+    }
+    document.getElementById('categoryEditForm').style.display = 'block';
+    document.getElementById('categoryEditForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function addCategory() {
+    editingCategoryId = null;
+    document.getElementById('editCategoryId').value = '';
+    document.getElementById('editCategoryName').value = '';
+    document.getElementById('editCategoryIcon').value = 'tag';
+    document.getElementById('editCategorySlug').value = '';
+    document.getElementById('categoryImagePreview').style.display = 'none';
+    document.getElementById('categoryEditForm').style.display = 'block';
+    document.getElementById('categoryEditForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function saveCategory() {
+    const id = parseInt(document.getElementById('editCategoryId').value);
+    let name = document.getElementById('editCategoryName').value.trim();
+    const icon = document.getElementById('editCategoryIcon').value.trim() || 'tag';
+    let slug = document.getElementById('editCategorySlug').value.trim();
+    
+    if (!name) { alert('Please enter category name'); return; }
+    
+    // Auto-generate slug if empty
+    if (!slug) {
+      slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    }
+    
+    const image = tempImages.category || '';
+    
+    if (id) {
+      const cat = appData.categories.find(c => c.id === id);
+      if (cat) { cat.name = name; cat.icon = icon; cat.slug = slug; if (image) cat.image = image; }
+    } else {
+      const newId = Math.max(...appData.categories.map(c => c.id), 0) + 1;
+      appData.categories.push({ id: newId, name, icon, slug, image });
+    }
+    tempImages.category = '';
+    saveToStorage();
+    document.getElementById('categoryEditForm').style.display = 'none';
+    renderAll();
+    showToast('✅ Category saved successfully!');
+  }
+
+  function deleteCategory() {
+    const id = parseInt(document.getElementById('editCategoryId').value);
+    if (!id) return;
+    if (!confirm('Delete this category?')) return;
+    appData.categories = appData.categories.filter(c => c.id !== id);
+    saveToStorage();
+    document.getElementById('categoryEditForm').style.display = 'none';
+    renderAll();
+    showToast('🗑️ Category deleted');
+  }
+
+  function cancelEditCategory() {
+    document.getElementById('categoryEditForm').style.display = 'none';
+    tempImages.category = '';
+  }
+
+  // ============================================================
+  // PRODUCT CRUD
+  // ============================================================
+  let editingProductId = null;
+
+  function editProduct(id) {
+    const p = appData.products.find(pr => pr.id === id);
+    if (!p) return;
+    editingProductId = id;
+    document.getElementById('editProductId').value = id;
+    document.getElementById('editProductName').value = p.name;
+    document.getElementById('editProductCategory').value = p.category;
+    document.getElementById('editProductIcon').value = p.icon || 'box';
+    document.getElementById('editProductPrice').value = parseFloat(p.price.replace(/,/g, '')) || 0;
+    document.getElementById('editProductSalePrice').value = parseFloat(p.salePrice.replace(/,/g, '')) || 0;
+    document.getElementById('editProductDesc').value = p.desc || '';
+    document.getElementById('editProductStock').value = p.stock || 0;
+    document.getElementById('editProductStatus').value = p.status || 'Active';
+    if (p.image) {
+      document.getElementById('productImagePreview').src = p.image;
+      document.getElementById('productImagePreview').style.display = 'block';
+      tempImages.product = p.image;
+    }
+    document.getElementById('productEditForm').style.display = 'block';
+    document.getElementById('productEditForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function addProduct() {
+    editingProductId = null;
+    document.getElementById('editProductId').value = '';
+    document.getElementById('editProductName').value = '';
+    document.getElementById('editProductCategory').value = appData.categories[0]?.name || '';
+    document.getElementById('editProductIcon').value = 'box';
+    document.getElementById('editProductPrice').value = '';
+    document.getElementById('editProductSalePrice').value = '';
+    document.getElementById('editProductDesc').value = '';
+    document.getElementById('editProductStock').value = '0';
+    document.getElementById('editProductStatus').value = 'Active';
+    document.getElementById('productImagePreview').style.display = 'none';
+    document.getElementById('productEditForm').style.display = 'block';
+    document.getElementById('productEditForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function saveProduct() {
+    const id = parseInt(document.getElementById('editProductId').value);
+    const name = document.getElementById('editProductName').value.trim();
+    const category = document.getElementById('editProductCategory').value.trim();
+    const icon = document.getElementById('editProductIcon').value.trim() || 'box';
+    const price = document.getElementById('editProductPrice').value;
+    const salePrice = document.getElementById('editProductSalePrice').value;
+    const desc = document.getElementById('editProductDesc').value.trim();
+    const stock = parseInt(document.getElementById('editProductStock').value) || 0;
+    const status = document.getElementById('editProductStatus').value;
+    const image = tempImages.product || '';
+    
+    if (!name || !category || !price) { 
+      alert('Please fill all required fields (Name, Category, Price)'); 
+      return; 
+    }
+    
+    // Format prices with commas
+    const formattedPrice = Number(price).toLocaleString('en-PK');
+    const formattedSalePrice = salePrice ? Number(salePrice).toLocaleString('en-PK') : '';
+    
+    if (id) {
+      const p = appData.products.find(pr => pr.id === id);
+      if (p) { 
+        p.name = name; 
+        p.category = category; 
+        p.icon = icon; 
+        p.price = formattedPrice; 
+        p.salePrice = formattedSalePrice || p.salePrice; 
+        p.desc = desc; 
+        p.stock = stock; 
+        p.status = status; 
+        if (image) p.image = image; 
+      }
+    } else {
+      const newId = Math.max(...appData.products.map(p => p.id), 0) + 1;
+      appData.products.push({ 
+        id: newId, 
+        name, 
+        category, 
+        price: formattedPrice, 
+        salePrice: formattedSalePrice, 
+        icon, 
+        desc, 
+        stock, 
+        status, 
+        image 
+      });
+    }
+    tempImages.product = '';
+    saveToStorage();
+    document.getElementById('productEditForm').style.display = 'none';
+    renderAll();
+    showToast('✅ Product saved successfully!');
+  }
+
+  function deleteProduct() {
+    const id = parseInt(document.getElementById('editProductId').value);
+    if (!id) return;
+    if (!confirm('Delete this product?')) return;
+    appData.products = appData.products.filter(p => p.id !== id);
+    saveToStorage();
+    document.getElementById('productEditForm').style.display = 'none';
+    renderAll();
+    showToast('🗑️ Product deleted');
+  }
+
+  function cancelEditProduct() {
+    document.getElementById('productEditForm').style.display = 'none';
+    tempImages.product = '';
+  }
+
+  // ============================================================
+  // REVIEW CRUD
+  // ============================================================
+  let editingReviewId = null;
+
+  function editReview(id) {
+    const r = appData.reviews.find(rev => rev.id === id);
+    if (!r) return;
+    editingReviewId = id;
+    document.getElementById('editReviewId').value = id;
+    document.getElementById('editReviewName').value = r.name;
+    document.getElementById('editReviewRating').value = r.rating;
+    document.getElementById('editReviewText').value = r.text;
+    document.getElementById('editReviewDate').value = r.date || 'Today';
+    document.getElementById('editReviewApproved').value = r.approved ? 'true' : 'false';
+    document.getElementById('reviewEditForm').style.display = 'block';
+    document.getElementById('reviewEditForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function saveReview() {
+    const id = parseInt(document.getElementById('editReviewId').value);
+    const name = document.getElementById('editReviewName').value.trim();
+    const rating = parseInt(document.getElementById('editReviewRating').value) || 5;
+    const text = document.getElementById('editReviewText').value.trim();
+    const date = document.getElementById('editReviewDate').value.trim() || 'Today';
+    const approved = document.getElementById('editReviewApproved').value === 'true';
+    
+    if (!name || !text) { alert('Please fill all fields'); return; }
+    
+    if (id) {
+      const r = appData.reviews.find(rev => rev.id === id);
+      if (r) { r.name = name; r.rating = rating; r.text = text; r.date = date; r.approved = approved; }
+    } else {
+      const newId = Math.max(...appData.reviews.map(r => r.id), 0) + 1;
+      appData.reviews.push({ id: newId, name, rating, text, date, approved });
+    }
+    saveToStorage();
+    document.getElementById('reviewEditForm').style.display = 'none';
+    renderAll();
+    showToast('✅ Review saved successfully!');
+  }
+
+  function deleteReview() {
+    const id = parseInt(document.getElementById('editReviewId').value);
+    if (!id) return;
+    if (!confirm('Delete this review?')) return;
+    appData.reviews = appData.reviews.filter(r => r.id !== id);
+    saveToStorage();
+    document.getElementById('reviewEditForm').style.display = 'none';
+    renderAll();
+    showToast('🗑️ Review deleted');
+  }
+
+  function cancelEditReview() {
+    document.getElementById('reviewEditForm').style.display = 'none';
+  }
+
+  // ============================================================
+  // FAQ CRUD
+  // ============================================================
+  let editingFaqId = null;
+
+  function editFaq(id) {
+    const f = appData.faq.find(faq => faq.id === id);
+    if (!f) return;
+    editingFaqId = id;
+    document.getElementById('editFaqId').value = id;
+    document.getElementById('editFaqQuestion').value = f.question;
+    document.getElementById('editFaqAnswer').value = f.answer;
+    document.getElementById('editFaqIcon').value = f.icon || 'question-circle';
+    document.getElementById('editFaqOrder').value = f.order || 0;
+    document.getElementById('faqEditForm').style.display = 'block';
+    document.getElementById('faqEditForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function addFaq() {
+    editingFaqId = null;
+    document.getElementById('editFaqId').value = '';
+    document.getElementById('editFaqQuestion').value = '';
+    document.getElementById('editFaqAnswer').value = '';
+    document.getElementById('editFaqIcon').value = 'question-circle';
+    document.getElementById('editFaqOrder').value = appData.faq.length + 1;
+    document.getElementById('faqEditForm').style.display = 'block';
+    document.getElementById('faqEditForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function saveFaq() {
+    const id = parseInt(document.getElementById('editFaqId').value);
+    const question = document.getElementById('editFaqQuestion').value.trim();
+    const answer = document.getElementById('editFaqAnswer').value.trim();
+    const icon = document.getElementById('editFaqIcon').value.trim() || 'question-circle';
+    const order = parseInt(document.getElementById('editFaqOrder').value) || 0;
+    
+    if (!question || !answer) { alert('Please fill all fields'); return; }
+    
+    if (id) {
+      const f = appData.faq.find(faq => faq.id === id);
+      if (f) { f.question = question; f.answer = answer; f.icon = icon; f.order = order; }
+    } else {
+      const newId = Math.max(...appData.faq.map(f => f.id), 0) + 1;
+      appData.faq.push({ id: newId, question, answer, icon, order });
+    }
+    saveToStorage();
+    document.getElementById('faqEditForm').style.display = 'none';
+    renderAll();
+    showToast('✅ FAQ saved successfully!');
+  }
+
+  function deleteFaq() {
+    const id = parseInt(document.getElementById('editFaqId').value);
+    if (!id) return;
+    if (!confirm('Delete this FAQ?')) return;
+    appData.faq = appData.faq.filter(f => f.id !== id);
+    saveToStorage();
+    document.getElementById('faqEditForm').style.display = 'none';
+    renderAll();
+    showToast('🗑️ FAQ deleted');
+  }
+
+  function cancelEditFaq() {
+    document.getElementById('faqEditForm').style.display = 'none';
+  }
+
+  // ============================================================
+  // CONTACT, SOCIAL, HERO, BRAND, SETTINGS
+  // ============================================================
+  function saveContact() {
+    appData.contact.whatsapp = document.getElementById('contactWhatsapp').value.trim();
+    appData.contact.phone = document.getElementById('contactPhone').value.trim();
+    appData.contact.email = document.getElementById('contactEmail').value.trim();
+    appData.contact.hours = document.getElementById('contactHours').value.trim();
+    appData.contact.address = document.getElementById('contactAddress').value.trim();
+    saveToStorage();
+    renderAll();
+    showToast('✅ Contact saved successfully!');
+  }
+
+  function saveSocial() {
+    appData.social.instagram = document.getElementById('socialInstagram').value.trim();
+    appData.social.facebook = document.getElementById('socialFacebook').value.trim();
+    appData.social.youtube = document.getElementById('socialYoutube').value.trim();
+    appData.social.tiktok = document.getElementById('socialTiktok').value.trim();
+    saveToStorage();
+    renderAll();
+    showToast('✅ Social links saved successfully!');
+  }
+
+  function saveHero() {
+    appData.hero.badge = document.getElementById('heroBadge').value.trim();
+    appData.hero.title = document.getElementById('heroTitle').value.trim();
+    appData.hero.subtitle = document.getElementById('heroSub').value.trim();
+    if (tempImages.hero) appData.hero.image = tempImages.hero;
+    tempImages.hero = '';
+    saveToStorage();
+    renderAll();
+    showToast('✅ Hero section saved successfully!');
+  }
+
+  function saveBrand() {
+    if (!appData.brand) appData.brand = {};
+    appData.brand.name = document.getElementById('brandName').value.trim();
+    appData.brand.tagline = document.getElementById('brandTagline').value.trim();
+    appData.brand.primaryColor = document.getElementById('brandPrimaryColor').value;
+    appData.brand.secondaryColor = document.getElementById('brandSecondaryColor').value;
+    appData.brand.description = document.getElementById('brandDesc').value.trim();
+    if (tempImages.brandLogo) appData.brand.logo = tempImages.brandLogo;
+    tempImages.brandLogo = '';
+    saveToStorage();
+    renderAll();
+    showToast('✅ Brand settings saved successfully!');
+  }
+
+  function saveSettings() {
+    appData.footer = document.getElementById('footerText').value.trim();
+    appData.footerDesc = document.getElementById('footerDesc').value.trim();
+    saveToStorage();
+    renderAll();
+    showToast('✅ Settings saved successfully!');
+  }
+
+  // ============================================================
+  // EXPORT CSV
+  // ============================================================
+  function exportCSV() {
+    if (!appData || !appData.products.length) {
+      alert('No products to export.');
+      return;
+    }
+    
+    let csv = 'ID,Name,Category,Price,Sale Price,Stock,Status,Description\n';
+    appData.products.forEach(p => {
+      csv += `${p.id},"${p.name}","${p.category}","${p.price}","${p.salePrice}",${p.stock},"${p.status}","${p.desc.replace(/"/g, '""')}"\n`;
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'samar_products_export.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('📊 CSV exported successfully!');
+  }
+
+  // ============================================================
+  // RESET DATA
+  // ============================================================
+  function resetData() {
+    if (!confirm('⚠️ Reset ALL data to default?')) return;
+    if (!confirm('All changes will be lost. Confirm?')) return;
+    appData = getDefaultData();
+    saveToStorage();
+    renderAll();
+    showToast('🔄 Data reset to default!');
+  }
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function() {
+    if (sessionStorage.getItem('samarLoggedIn') === 'true') {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      loadData();
+      renderAll();
+    }
+  });
+</script>
+</body>
+</html>
